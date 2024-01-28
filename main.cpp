@@ -16,6 +16,6 @@ int main()
 		std::cout << "Enter the empty weight of the plane (in lbs): ";
 		std::cin >> weight;
 		totalPlaneWeight += weight;
+
 	}
-	std::cout<<"The total weight of the plane is: "<<totalPlaneWeight<<std::endl;
 }
