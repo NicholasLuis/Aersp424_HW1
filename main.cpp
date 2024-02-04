@@ -8,7 +8,7 @@
 int main()
 {
 	// Initializing variables
-	double totalPlaneWeight = 0, totalPlaneMoment = 0, fuelGallons = 0, centerOfGravity;
+	double totalPlaneWeight = 0, totalPlaneMoment = 0, fuelGallons = 0, fuelWeight = 0, centerOfGravity;
 	static uint16_t maxWeight = 2950; // designed weight limit of the plane (lbs)
 	static long frontCoG = 82.1, aftCoG = 84.7; // designed center of gravity lmit of the plane (inches)
 
@@ -16,9 +16,9 @@ int main()
 	{
 		// Intializing temporary variables
 		uint16_t weight, frontOccupantsNumber, rearOccupantsNumber, cargoWeight;
-		double frontOccupantsMoment, frontOccupantsMomentArm, frontOccupantsWeight = 0,
-			rearOccupantsMoment, rearOccupantsMomentArm, rearOccupantsWeight = 0,
-			cargoMomentArm, cargoMoment, fuelWeight, fuelMoment, fuelMomentArm;
+		double frontOccupantsMoment, frontOccupantsWeight = 0, momentArm,
+			 rearOccupantsMoment, rearOccupantsWeight = 0,
+			 cargoMoment, fuelMoment;
 
 		// Requests plane's empty weight, passengers, fuel, and cargo 
 		std::cout << "Enter the empty weight of the plane (lbs): ";
@@ -35,46 +35,59 @@ int main()
 		
 		// Calculates total moment from the front passengers
 		std::cout << "Enter the moment arm of the front seat (inches): ";
-		std::cin >> frontOccupantsMoment;
-		std::cout << "Enter the weights (lbs) of the passengers in the front seat. Separate the numbers with spaces: ";
+		std::cin >> momentArm;
+		std::cout << "Enter the weights (lbs) of each passenger in the front seat. Separate the numbers with spaces: ";
 		for (int i = 0; i < rearOccupantsNumber; i++)
 		{
 			std::cin >> weight;
 			frontOccupantsWeight += weight;
 		}
-		frontOccupantsMoment = frontOccupantsNumber * frontOccupantsWeight;
+		frontOccupantsMoment = frontOccupantsWeight * momentArm;
 
 		// Calculates total moment from the rear passengers
 		std::cout << "Enter the moment arm of the rear seat (inches): ";
-		std::cin >> rearOccupantsMoment;
-		std::cout << "Enter the weights (lbs) of the passengers in the rear seat. Separate the numbers with spaces: ";
+		std::cin >> momentArm;
+		std::cout << "Enter the weights (lbs) of each passenger in the rear seat. Separate the numbers with spaces: ";
 		for (int i = 0; i < rearOccupantsNumber; i++)
 		{
 			std::cin >> weight;
 			rearOccupantsWeight += weight;
 		}
-		rearOccupantsMoment = rearOccupantsNumber * rearOccupantsWeight;
+		rearOccupantsMoment = rearOccupantsWeight * momentArm;
 
 		// Calculates total moment from the fuel
 		std::cout << "Enter the number of gallons of usable fuel: ";
 		std::cin >> fuelGallons;
 		std::cout << "Enter the weight of 1 gallon of fuel (lbs): ";
-		std::cin >> cargoMomentArm;
+		std::cin >> weight;
 		std::cout << "Enter the moment arm of the fuel tank (inches): ";
-		std::cin >> cargoWeight;
+		std::cin >> momentArm;
+		fuelWeight = fuelGallons * weight;
+		fuelMoment = fuelGallons * fuelWeight * momentArm;
 
 		// Calculates total moment from the baggage
 		std::cout << "Enter the moment arm of the cargo (inches): ";
-		std::cin >> cargoMomentArm;
+		std::cin >> momentArm;
 		std::cout << "Enter the weight of the cargo (lbs): ";
 		std::cin >> cargoWeight;
+		cargoMoment = cargoWeight * momentArm;
 
-
-		totalPlaneWeight += (frontOccupantsWeight + rearOccupantsWeight);
-		totalPlaneMoment += (frontOccupantsMoment + rearOccupantsMoment);
+		totalPlaneWeight += (frontOccupantsWeight + rearOccupantsWeight + fuelWeight + cargoWeight);
+		totalPlaneMoment += (frontOccupantsMoment + rearOccupantsMoment + fuelMoment + cargoMoment);
 		centerOfGravity = totalPlaneMoment / totalPlaneWeight;
 	}
 
+	std::cout << "The total plane weight is: " << totalPlaneWeight << " (lbs)\nThe max weight is " << maxWeight;
+	std::cout << "The total plane CoG is at: " << centerOfGravity << " (inches)\nThe center of gravity should be between " 
+		      << frontCoG << " and " << aftCoG << " (inches)";
 
 
+	//// Adjusts the amount of fuel to make sure the plane is within design limits
+	//bool takeoff = false;
+	//
+	//while (takeoff = false)
+	//{
+	//
+	//
+	//}
 }
