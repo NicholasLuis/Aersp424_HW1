@@ -3,15 +3,33 @@
 #include <iomanip>
 
 // HW1 Problem 1 - Made by Nicholas Luis
-// Inputs: weight, number of passengers, moment arms, etc.
-// Output: Amount of fuel to add/remove to balance the plane and stay below the max weight
+// INPUT: weight, number of passengers, moment arms, etc.
+// OUTPUT: Amount of fuel to add/remove to balance the plane and stay below the max weight
 // 
 // Note: This program assumes that adding/removing fuel for weight does not significantly
 //		 push the plane to be unbalanced (or vice-versa: balancing does not lead it to exceed the weight limit)
 
- double fuelChange(double initialMoment, double initialWeight, double perGallonWeight, double fuelMomentArm)
+ void fuelChange(double initialMoment, double initialWeight, double perGallonWeight, double fuelMomentArm, double deltaCOG)
 {
-	return 1.0;
+	 // This function is a derived mathematical expression to find the change in fuel to acheive
+	 //		the required change in the center of gravity (COG)
+	 // INPUT: Initial moment and weight of the plane, weight of each gallon of fuel, moment arm of the fuel tank,
+	 //		   desired delta-COG
+	 // OUTPUT: Number of gallons to add/remove
+	 double deltaGallons = ( initialMoment - (deltaCOG*initialWeight)) / ((deltaCOG - fuelMomentArm)*perGallonWeight);
+
+	 if (deltaGallons < 0) // This means we need to remove fuel
+	 {
+		 std::cout << "\nRemove "
+				   << std::fixed << std::setprecision(2) << abs(deltaGallons)
+				   << " gallons of fuel to balance the plane's weight";
+	 }
+	 else // This means we need to add fuel
+	 {
+		 std::cout << "\Add "
+			 << std::fixed << std::setprecision(2) << deltaGallons
+			 << " gallons of fuel to balance the plane's weight";
+	 }
 }
 
 int main()
@@ -98,36 +116,52 @@ int main()
 			bool atLimit = true; // The plane is now at the weight limit after removing fuel
 		}
 
-		if (centerOfGravity < frontCoG) // Checks if CoG too far forward
+		// Checks if CoG is too far forward
+		if (centerOfGravity < frontCoG) 
 		{
 
 			// Compares center of gravity to the fuel moment arm to see if we should add or remove fuel
 			if (centerOfGravity < fuelMomentArm) // Need to add fuel to balance
 			{
-				if (atLimit) {
-					std::cout << "\nThe plane is at the weight limit and is unbalanced. Consider moving weight"
-						" from the front to the rear of the aircraft"; 
+				if (atLimit) // Checks if adding fuel will push it over weight limit
+				{
+					std::cout << "\nThe plane is at the weight limit and is unbalanced. Consider removine weight"
+						" from the front of the aircraft if possible."; 
 				}
 				else
 				{
-					std::cout << "\nRemove " << std::fixed << std::setprecision(2)
-							<< 
-							<< " gallons of fuel to balance the plane's weight";
+					fuelChange(totalPlaneMoment, totalPlaneWeight, perGallonWeight, fuelMomentArm, frontCoG - centerOfGravity);
 				}
 
-
 			}
-			else
+			else // Need to remove fuel to balance
 			{
-
+				fuelChange(totalPlaneMoment, totalPlaneWeight, perGallonWeight, fuelMomentArm, frontCoG - centerOfGravity);
 			}
 
 		}
-		else if (centerOfGravity > aftCoG) // Checks if CoG too far back
+		else if (centerOfGravity > aftCoG) // Checks if CoG is too far back
 		{
-			std::cout << "";
+
+			if (centerOfGravity < fuelMomentArm) // Need to remove fuel to balance
+			{
+				fuelChange(totalPlaneMoment, totalPlaneWeight, perGallonWeight, fuelMomentArm, frontCoG - centerOfGravity);
+			}
+			else // Need to add fuel to balance
+			{
+				if (atLimit) // Checks if adding fuel will push it over weight limit
+				{
+					std::cout << "\nThe plane is at the weight limit and is unbalanced. Consider removing weight"
+						" from the rear of the aircraft if possible.";
+				}
+				else
+				{
+					fuelChange(totalPlaneMoment, totalPlaneWeight, perGallonWeight, fuelMomentArm, frontCoG - centerOfGravity);
+				}
+			}
+
 		}
-		else
+		else // CoG is within the designed limits
 		{
 			std::cout << "The plane is within the design limits.";
 		}
