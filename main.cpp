@@ -20,15 +20,15 @@
 
 	 if (deltaGallons < 0) // This means we need to remove fuel
 	 {
-		 std::cout << "\nRemove "
+		 std::cout << "\n\nRemove "
 				   << std::fixed << std::setprecision(2) << abs(deltaGallons)
-				   << " gallons of fuel to balance the plane's weight";
+				   << " gallons of fuel to balance the plane's weight\n";
 	 }
 	 else // This means we need to add fuel
 	 {
-		 std::cout << "\Add "
+		 std::cout << "\n\nAdd "
 			 << std::fixed << std::setprecision(2) << deltaGallons
-			 << " gallons of fuel to balance the plane's weight";
+			 << " gallons of fuel to balance the plane's weight\n";
 	 }
 }
 
@@ -36,7 +36,7 @@ int main()
 {
 	// Initializing variables
 	double totalPlaneWeight = 0, totalPlaneMoment = 0, centerOfGravity,
-		fuelGallons = 0, perGallonWeight =0, totalFuelWeight = 0, fuelMomentArm = 0;
+		fuelGallons, perGallonWeight, fuelMomentArm;
 	static uint16_t maxWeight = 2950; // designed weight limit of the plane (lbs)
 	static long frontCoG = 82.1, aftCoG = 84.7; // designed center of gravity lmit of the plane (inches)
 
@@ -87,9 +87,9 @@ int main()
 		std::cout << "Enter the weight of 1 gallon of fuel (lbs): ";
 		std::cin >> perGallonWeight;
 		std::cout << "Enter the moment arm of the fuel tank (inches): ";
-		std::cin >> momentArm;
+		std::cin >> fuelMomentArm;
 		fuelWeight = fuelGallons * perGallonWeight;
-		fuelMoment = fuelWeight * momentArm;
+		fuelMoment = fuelWeight * fuelMomentArm;
 
 		// Calculates total moment from the baggage
 		std::cout << "Enter the weight of the baggage (lbs): ";
@@ -103,6 +103,12 @@ int main()
 		totalPlaneMoment += (frontOccupantsMoment + rearOccupantsMoment + fuelMoment + cargoMoment);
 		centerOfGravity = totalPlaneMoment / totalPlaneWeight;
 	}
+	//For debugging
+	std::cout << "\n\nThe COG is at " << centerOfGravity << " inches";
+	std::cout << "\n\nThe fuel moment arm is at " << fuelMomentArm << " inches";
+
+
+	// front limit = 82.1 inches, COG: 78.5421 inches, fuel moment arm = 
 
 	// This scope determines how much fuel to add/remove (if any)
 	{
@@ -110,8 +116,8 @@ int main()
 		
 		if (totalPlaneWeight > maxWeight)
 		{
-			std::cout << "\nThe plane is over the weight limit. Remove "
-				<< std::fixed << std::setprecision(2) << ((maxWeight - totalPlaneWeight) / perGallonWeight)
+			std::cout << "\n\nThe plane is over the weight limit. Remove "
+				<< std::fixed << std::setprecision(2) << abs( ((maxWeight - totalPlaneWeight) / perGallonWeight) )
 				<< " gallons of fuel";
 			bool atLimit = true; // The plane is now at the weight limit after removing fuel
 		}
