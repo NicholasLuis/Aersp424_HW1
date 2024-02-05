@@ -9,24 +9,24 @@
 // Note: This program assumes that adding/removing fuel for weight does not significantly
 //		 push the plane to be unbalanced (or vice-versa: balancing does not lead it to exceed the weight limit)
 
- void fuelChange(double initialMoment, double initialWeight, double perGallonWeight, double fuelMomentArm, double deltaCOG)
+ void fuelChange(double initialMoment, double initialWeight, double perGallonWeight, double fuelMomentArm, double newCOG)
 {
 	 // This function is a derived mathematical expression to find the change in fuel to acheive
-	 //		the required change in the center of gravity (COG)
+	 //		the desired center of gravity (COG) location
 	 // INPUT: Initial moment and weight of the plane, weight of each gallon of fuel, moment arm of the fuel tank,
-	 //		   desired delta-COG
+	 //		   desired COG
 	 // OUTPUT: Number of gallons to add/remove
-	 double deltaGallons = ( initialMoment - (deltaCOG*initialWeight)) / ((deltaCOG - fuelMomentArm)*perGallonWeight);
+	 double deltaGallons = ( initialMoment - (newCOG*initialWeight)) / ((newCOG - fuelMomentArm)*perGallonWeight);
 
 	 if (deltaGallons < 0) // This means we need to remove fuel
 	 {
-		 std::cout << "\n\nRemove "
+		 std::cout << "\nRemove "
 				   << std::fixed << std::setprecision(2) << abs(deltaGallons)
 				   << " gallons of fuel to balance the plane's weight\n";
 	 }
 	 else // This means we need to add fuel
 	 {
-		 std::cout << "\n\nAdd "
+		 std::cout << "\nAdd "
 			 << std::fixed << std::setprecision(2) << deltaGallons
 			 << " gallons of fuel to balance the plane's weight\n";
 	 }
@@ -116,9 +116,16 @@ int main()
 		
 		if (totalPlaneWeight > maxWeight)
 		{
+			double fuelRemove = abs(((maxWeight - totalPlaneWeight) / perGallonWeight));
 			std::cout << "\n\nThe plane is over the weight limit. Remove "
-				<< std::fixed << std::setprecision(2) << abs( ((maxWeight - totalPlaneWeight) / perGallonWeight) )
-				<< " gallons of fuel";
+				<< std::fixed << std::setprecision(2) <<  fuelRemove
+				<< " gallons of fuel"
+				<< "\n\nNow: ";
+
+			//Calculates the new weight and center of gravity after the changes
+			totalPlaneWeight -= fuelRemove*perGallonWeight;
+			centerOfGravity = totalPlaneMoment / totalPlaneWeight;
+
 			bool atLimit = true; // The plane is now at the weight limit after removing fuel
 		}
 
@@ -131,18 +138,18 @@ int main()
 			{
 				if (atLimit) // Checks if adding fuel will push it over weight limit
 				{
-					std::cout << "\nThe plane is at the weight limit and is unbalanced. Consider removine weight"
+					std::cout << "\nThe plane is at the weight limit and is also unbalanced. Consider removing weight"
 						" from the front of the aircraft if possible."; 
 				}
 				else
 				{
-					fuelChange(totalPlaneMoment, totalPlaneWeight, perGallonWeight, fuelMomentArm, frontCoG - centerOfGravity);
+					fuelChange(totalPlaneMoment, totalPlaneWeight, perGallonWeight, fuelMomentArm, frontCoG);
 				}
 
 			}
 			else // Need to remove fuel to balance
 			{
-				fuelChange(totalPlaneMoment, totalPlaneWeight, perGallonWeight, fuelMomentArm, frontCoG - centerOfGravity);
+				fuelChange(totalPlaneMoment, totalPlaneWeight, perGallonWeight, fuelMomentArm, frontCoG);
 			}
 
 		}
@@ -151,18 +158,18 @@ int main()
 
 			if (centerOfGravity < fuelMomentArm) // Need to remove fuel to balance
 			{
-				fuelChange(totalPlaneMoment, totalPlaneWeight, perGallonWeight, fuelMomentArm, frontCoG - centerOfGravity);
+				fuelChange(totalPlaneMoment, totalPlaneWeight, perGallonWeight, fuelMomentArm, aftCoG);
 			}
 			else // Need to add fuel to balance
 			{
 				if (atLimit) // Checks if adding fuel will push it over weight limit
 				{
-					std::cout << "\nThe plane is at the weight limit and is unbalanced. Consider removing weight"
+					std::cout << "\nThe plane is at the weight limit and is also unbalanced. Consider removing weight"
 						" from the rear of the aircraft if possible.";
 				}
 				else
 				{
-					fuelChange(totalPlaneMoment, totalPlaneWeight, perGallonWeight, fuelMomentArm, frontCoG - centerOfGravity);
+					fuelChange(totalPlaneMoment, totalPlaneWeight, perGallonWeight, fuelMomentArm, aftCoG);
 				}
 			}
 
