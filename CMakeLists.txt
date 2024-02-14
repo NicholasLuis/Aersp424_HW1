@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.23)
+project(AERSP_424)
+set(CMAKE_CXX_STANDARD 20)
+add_executable(Q1 Problem1.cpp fuelChange.cpp fuelChange.h)
+add_executable(Q2 Problem2.cpp)
