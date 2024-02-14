@@ -1,0 +1,1 @@
+void fuelChange(double initialMoment, double initialWeight, double perGallonWeight, double fuelMomentArm, double newCOG);

@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <iostream>
 #include <iomanip>
+#include "fuelChange.h"
 
 // HW1 Problem 1 - Made by Nicholas Luis
 // INPUT: weight, number of passengers, moment arms, etc.
@@ -8,29 +9,6 @@
 // 
 // Note: This program assumes that adding/removing fuel for weight does not significantly
 //		 push the plane to be unbalanced (or vice-versa: balancing does not lead it to exceed the weight limit)
-
- void fuelChange(double initialMoment, double initialWeight, double perGallonWeight, double fuelMomentArm, double newCOG)
-{
-	 // This function is a derived mathematical expression to find the change in fuel to acheive
-	 //		the desired center of gravity (COG) location
-	 // INPUT: Initial moment and weight of the plane, weight of each gallon of fuel, moment arm of the fuel tank,
-	 //		   desired COG
-	 // OUTPUT: Number of gallons to add/remove
-	 double deltaGallons = ( initialMoment - (newCOG*initialWeight)) / ((newCOG - fuelMomentArm)*perGallonWeight);
-
-	 if (deltaGallons < 0) // This means we need to remove fuel
-	 {
-		 std::cout << "\nRemove "
-				   << std::fixed << std::setprecision(2) << abs(deltaGallons)
-				   << " gallons of fuel to balance the plane's weight\n";
-	 }
-	 else // This means we need to add fuel
-	 {
-		 std::cout << "\nAdd "
-			 << std::fixed << std::setprecision(2) << deltaGallons
-			 << " gallons of fuel to balance the plane's weight\n";
-	 }
-}
 
 int main()
 {
@@ -103,12 +81,6 @@ int main()
 		totalPlaneMoment += (frontOccupantsMoment + rearOccupantsMoment + fuelMoment + cargoMoment);
 		centerOfGravity = totalPlaneMoment / totalPlaneWeight;
 	}
-	//For debugging
-	std::cout << "\n\nThe COG is at " << centerOfGravity << " inches";
-	std::cout << "\n\nThe fuel moment arm is at " << fuelMomentArm << " inches";
-
-
-	// front limit = 82.1 inches, COG: 78.5421 inches, fuel moment arm = 
 
 	// This scope determines how much fuel to add/remove (if any)
 	{
@@ -120,7 +92,7 @@ int main()
 			std::cout << "\n\nThe plane is over the weight limit. Remove "
 				<< std::fixed << std::setprecision(2) <<  fuelRemove
 				<< " gallons of fuel"
-				<< "\n\nNow: ";
+				<< "\n\nNow ";
 
 			//Calculates the new weight and center of gravity after the changes
 			totalPlaneWeight -= fuelRemove*perGallonWeight;
@@ -139,7 +111,7 @@ int main()
 				if (atLimit) // Checks if adding fuel will push it over weight limit
 				{
 					std::cout << "\nThe plane is at the weight limit and is also unbalanced. Consider removing weight"
-						" from the front of the aircraft if possible."; 
+						" from the front of the aircraft if possible." << std::endl; 
 				}
 				else
 				{
@@ -165,7 +137,7 @@ int main()
 				if (atLimit) // Checks if adding fuel will push it over weight limit
 				{
 					std::cout << "\nThe plane is at the weight limit and is also unbalanced. Consider removing weight"
-						" from the rear of the aircraft if possible.";
+						" from the rear of the aircraft if possible." << std::endl;
 				}
 				else
 				{
@@ -176,7 +148,7 @@ int main()
 		}
 		else // CoG is within the designed limits
 		{
-			std::cout << "The plane is within the design limits.";
+			std::cout << "The plane is within the design limits." << std::endl;
 		}
 	}
 
