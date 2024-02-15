@@ -9,6 +9,10 @@
 
 int main()
 {
+	std::cout << "---------------------------------------------------------------------"
+			<< "\n-----------------------BEGINNING OF QUESTION 2-----------------------"
+			<< "\n---------------------------------------------------------------------" << std::endl;
+
 	std::array< std::string, 3> flightList = {
 		"There are 160-mile flights between \"SCE\" and \"PHL\"",
 		"There are 640-mile flights between \"SCE\" and \"ORD\"",

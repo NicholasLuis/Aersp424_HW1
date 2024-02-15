@@ -12,6 +12,9 @@
 
 int main()
 {
+	std::cout << "---------------------------------------------------------------------"
+			<< "\n-----------------------BEGINNING OF QUESTION 1-----------------------"
+			<< "\n---------------------------------------------------------------------" << std::endl;
 	// Initializing variables
 	double totalPlaneWeight = 0, totalPlaneMoment = 0, centerOfGravity,
 		fuelGallons, perGallonWeight, fuelMomentArm;
