@@ -6,8 +6,7 @@ Plane::Plane(std::string start, std::string end)
 	: origin(start), destination(end),
 	pos(0.0), vel(0.0), distance(0.0), at_SCE(false) // initializing values
 {
-	std::cout << "Constructor executed" << std::endl;
-	pos = 0;
+	std::cout << "Plane created at: " << this << std::endl;
 }
 
 // Basic functions that return or change the object's values

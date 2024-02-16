@@ -13,16 +13,16 @@ int main()
 			<< "\n-----------------------BEGINNING OF QUESTION 2-----------------------"
 			<< "\n---------------------------------------------------------------------" << std::endl;
 
-	std::array< std::string, 3> flightList = {
-		"There are 160-mile flights between \"SCE\" and \"PHL\"",
-		"There are 640-mile flights between \"SCE\" and \"ORD\"",
-		"There are 220-mile flights between \"SCE\" and \"EWR\"",
-	};
+	//This array keeps track of the distances between airports
+	std::array< int, 3> airportDistances = { 160, 640, 220 };
 
-	//// Uncomment to test if the container works
-	//for (auto& line : flightList) 
+	//This array keeps track of the destination airports
+	std::array< std::string, 3> airportNames = { "PHL", "ORD", "EWR" };
+
+	//// Uncomment to test if the containers works
+	//for (int i = 0; i < size(airportDistances); i++)
 	//{
-	//	std::cout << line << std::endl;
+	//	std::cout << "There are " << airportDistances[i] << "-mile flights between \"SCE\" and \"" << airportNames[i] << "\"" << std::endl;
 	//}
 
 	return 0;
