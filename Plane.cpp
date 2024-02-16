@@ -24,5 +24,25 @@ double Plane::getVel() { return vel;  }
 void Plane::setVel(double newVel) { vel = newVel; }
 std::string	Plane::getOrigin() { return Plane::origin; }
 std::string	Plane::getDestination() { return destination; }
-void Plane::Operate(double dt) {}
 bool Plane::get_at_SCE() { return at_SCE; }
+
+void Plane::Operate(double dt) { // Checks if at the destination yet. If not continues towards destination
+	if (pos < distance) {
+		pos += vel * dt;
+		at_SCE = 0; // 0 = false; Not there yet
+	}
+	else {
+		if (destination.compare("SCE")) { at_SCE = 1; }
+
+		// Swaps the value of origin and destination;
+		std::string newDestination = origin;
+		origin = destination;
+		destination = newDestination;
+
+		pos = 0.0;
+	}
+
+	//Check if time-related variables are < 0
+	if (pos < 0) { pos = 0; }
+	if (vel < 0) { vel = 0; }
+}

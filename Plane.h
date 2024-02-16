@@ -22,8 +22,8 @@ public:
 	void setVel(double newVel);
 	std::string	getOrigin();
 	std::string	getDestination();
-	void	Operate(double dt);
 	bool	get_at_SCE();
+	void	Operate(double dt);
 
 };
 #endif
