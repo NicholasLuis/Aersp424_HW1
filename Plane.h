@@ -4,6 +4,8 @@
 #include <array>
 #include <iostream>
 
+// Question 4
+
 class Plane {
 private:
 	double pos, vel, distance;
@@ -14,7 +16,7 @@ private:
 
 public:
 	Plane(std::string start, std::string end); // Constructor that takes in the origin & destination strings}
-	~Plane() { std::cout << "Deconstructor executed<" << std::endl; }; // Destructor
+	~Plane() { std::cout << "Plane Destroyed" << std::endl; }; // Destructor
 
 	// Initializing functions
 	double getPos();

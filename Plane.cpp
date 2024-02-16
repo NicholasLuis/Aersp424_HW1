@@ -2,6 +2,8 @@
 #include <iostream>
 #include <array>
 
+// Question 4
+
 Plane::Plane(std::string start, std::string end)
 	: origin(start), destination(end),
 	pos(0.0), vel(0.0), distance(0.0), at_SCE(0) // initializing values
@@ -12,7 +14,7 @@ Plane::Plane(std::string start, std::string end)
 	for (int i = 0; i < size(airportNames); i++) 
 	{
 		// Always either starting or ending from SCE. So we only check the other airport name
-		if ( (origin.compare(airportNames[i]) ) || (destination.compare(airportNames[i]) ) )	{
+		if ( (origin == airportNames[i] ) || (destination == airportNames[i] ) )	{
 			distance = airportDistances[i];
 		}
 	}
@@ -28,11 +30,11 @@ bool Plane::get_at_SCE() { return at_SCE; }
 
 void Plane::Operate(double dt) { // Checks if at the destination yet. If not continues towards destination
 	if (pos < distance) {
-		pos += vel * dt;
+		pos += vel*(double (dt/3600) ); // Converts seconds to hours to get pos in miles
 		at_SCE = 0; // 0 = false; Not there yet
 	}
 	else {
-		if (destination.compare("SCE")) { at_SCE = 1; }
+		if (destination == "SCE") { at_SCE = 1; }
 
 		// Swaps the value of origin and destination;
 		std::string newDestination = origin;
