@@ -4,7 +4,7 @@
 #include <array>
 #include <iostream>
 
-// Question 4
+// Plane class header for question 4
 
 class Plane {
 private:

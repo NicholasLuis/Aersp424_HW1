@@ -2,7 +2,7 @@
 #include <iostream>
 #include <array>
 
-// Question 4
+// Plane class definition for question 4
 
 Plane::Plane(std::string start, std::string end)
 	: origin(start), destination(end),
