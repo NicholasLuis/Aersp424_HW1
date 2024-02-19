@@ -4,7 +4,7 @@
 
 // Plane class definition for question 4
 
-Plane::Plane(std::string start, std::string end)
+Plane::Plane(std::string start, std::string end) // Constructor
 	: origin(start), destination(end),
 	pos(0.0), vel(0.0), distance(0.0), at_SCE(0) // initializing values
 { // Implementations
@@ -18,6 +18,10 @@ Plane::Plane(std::string start, std::string end)
 			distance = airportDistances[i];
 		}
 	}
+}
+
+Plane::~Plane() { // Deconstructor 
+	std::cout << "Plane Destroyed" << std::endl;
 }
 
 // Basic functions that return or change the object's values

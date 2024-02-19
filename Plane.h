@@ -16,7 +16,7 @@ private:
 
 public:
 	Plane(std::string start, std::string end); // Constructor that takes in the origin & destination strings}
-	~Plane() { std::cout << "Plane Destroyed" << std::endl; }; // Destructor
+	~Plane(); // Destructor
 
 	// Initializing functions
 	double getPos();
