@@ -10,7 +10,7 @@ class Pilot {
 private: 
 	std::string name;
 public: 
-	Pilot(std::string pilotName); // Constructor
+	Pilot(std::string pilotName, Plane* pilotsPlane); // Constructor
 	~Pilot(); // Deconstructor
 	
 	Plane* MyPlane; // Pointer to plane object

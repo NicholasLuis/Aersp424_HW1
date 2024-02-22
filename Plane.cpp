@@ -21,7 +21,7 @@ Plane::Plane(std::string start, std::string end) // Constructor
 }
 
 Plane::~Plane() { // Deconstructor 
-	std::cout << "Plane Destroyed" << std::endl;
+	std::cout << "\nPlane Destroyed" << std::endl;
 }
 
 // Basic functions that return or change the object's values
