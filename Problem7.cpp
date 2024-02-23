@@ -46,5 +46,6 @@ int main() {
 
 	}
 
+	delete pln; // Un-allocates memory
 	return 0;
 }
